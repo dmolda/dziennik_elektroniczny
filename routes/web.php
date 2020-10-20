@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\StudentsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,18 @@ Route::group([
     Route::resource('classes', ClassesController::class)->only([
         'index','destroy','create','store','edit','update','show'
     ]);
+
+    Route::resource('students', StudentsController::class)->only([
+        'index','store','edit','destroy','show','update'
+    ]);
+
+    Route::get('students/add', [StudentsController::class, 'add'])->name('students.add');
+
+    Route::get('students/create', [StudentsController::class, 'create'])->name('students.create');
+
+    Route::post('students/storeadd', [StudentsController::class, 'storeadd'])->name('students.storeadd');
+
+//    Route::resource('students',StudentsController::class);
 
 });
 

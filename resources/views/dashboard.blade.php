@@ -14,6 +14,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <a class="btn btn-info" href="{{ route('users.index') }}">Użytkownicy</a>
                 <a class="btn btn-info" href="{{ route('classes.index') }}">Klasy</a>
+                <a class="btn btn-info" href="{{ route('students.index') }}">Uczniowie</a>
 
             </div>
         </div>

@@ -2,13 +2,15 @@
 
 @section('page_info')
     Edytowany użytkownik:
-    {{ \App\Models\Users::where('id','=',$user_id)->first()->name }}
+    {{\App\Models\Users::find($user_id)->name}}
 @endsection
 
 @section('content')
 
     <div class="card-header">
         <p style="text-align: left"> <a class="btn btn-info" href="{{route('roles.create','user_id='.$user_id)}}">Dodaj nową range</a>
+            <a class="btn btn-info" href="{{route('students.create','user_id='.$user_id)}}">Dodaj do klasy</a>
+            <a class="btn btn-info" href="{{route('roles.create','user_id='.$user_id)}}">Dodaj nauczyciela</a>
             <span style="float: right">
             <a class="btn btn-info" href="{{route('users.index')}}">Powrót</a>
         </span>

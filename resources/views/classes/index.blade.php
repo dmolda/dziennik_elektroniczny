@@ -13,13 +13,6 @@
             <a class="btn btn-info" href="{!! url()->previous() !!}">Powrót</a>
         </span>
         </p>
-        <?php
-        $faker = \Faker\Factory::create('pl_PL');
-
-        echo $faker->firstName;
-        ?>
-
-
     </div>
 
     <table class="table table-hover">
