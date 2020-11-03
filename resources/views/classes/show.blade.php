@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="card-header">
-        <p style="text-align: left"> <a class="btn btn-info" href="{{route('students.add')}}">Dodaj nowego ucznia</a>
+        <p style="text-align: left"> <a class="btn btn-info" href="{{route('students.add', $class->id)}}">Dodaj nowego ucznia</a>
             <span style="float: right">
             <a class="btn btn-info" href="{!! url()->previous() !!}">Powrót</a>
         </span>
@@ -38,7 +38,7 @@
                         $student_id = "student_id=". $student->id;
                         ?>
                         <td>
-                            <a class="btn btn-info" href="{{ route('students.index', $student_id)}}"><i class="far fa-eye"></i></a>
+                            <a class="btn btn-info" href="{{ route('students.show', $student->id)}}"><i class="far fa-eye"></i></a>
                         </td>
                         <td>
                             <a class="btn btn-info" href="{{ route('students.edit', $student->id)}}"><i class="fas fa-user-edit"></i></a>

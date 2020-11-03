@@ -10,7 +10,7 @@
     <div class="card-header">
         <p style="text-align: left"> <a class="btn btn-info" href="{{route('users.create')}}">Dodaj nowego użytkownika</a>
         <span style="float: right">
-            <a class="btn btn-info" href="{!! url()->previous() !!}">Powrót</a>
+            <a class="btn btn-info" href="{{route('dashboard')}}">Powrót</a>
         </span>
         </p>
 

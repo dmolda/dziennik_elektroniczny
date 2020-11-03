@@ -10,7 +10,7 @@
     <div class="card-header">
         <p style="text-align: left"> <a class="btn btn-info" href="{{route('roles.create','user_id='.$user_id)}}">Dodaj nową range</a>
             <a class="btn btn-info" href="{{route('students.create','user_id='.$user_id)}}">Dodaj do klasy</a>
-            <a class="btn btn-info" href="{{route('roles.create','user_id='.$user_id)}}">Dodaj nauczyciela</a>
+            <a class="btn btn-info" href="{{route('teachers.create','user_id='.$user_id)}}">Dodaj nauczyciela</a>
             <span style="float: right">
             <a class="btn btn-info" href="{{route('users.index')}}">Powrót</a>
         </span>

@@ -32,7 +32,7 @@
                 <td>
                     <a class="btn btn-info" href="{{route('students.show', $student->id)}}"><i class="fas fa-user-edit"></i></a>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['students.destroy', $student->id]]) !!}
-                    <button class="btn btn-danger">USUŃ</button>
+                    <button class="btn btn-danger">USUŃ(dodać)</button>
                     {!! Form::close() !!}</td>
             </tr>
         @endforeach

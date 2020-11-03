@@ -54,6 +54,16 @@ class UsersTableSeeder extends Seeder
             $user->email = $faker->email;
             $user->password = bcrypt('qwerty12');
             $user->save();
+            $user->roles()->attach(Roles::where('name','nauczyciel')->first()->id);
+
+        }
+
+        for($i=0;$i<100;$i++){
+            $user = new User();
+            $user->name = $faker->userName;
+            $user->email = $faker->email;
+            $user->password = bcrypt('qwerty12');
+            $user->save();
 
         }
     }

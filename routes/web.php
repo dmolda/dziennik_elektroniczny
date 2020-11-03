@@ -5,6 +5,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TeachersController;
+use App\Http\Controllers\SubjectsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,13 +31,6 @@ Route::group([
     'middleware' => 'roles',
     'roles' => ['Administrator']
 ], function() {
-//    Route::resource('users',UsersController::class);
-
-//    Route::get('users',[UsersController::class,'index'])->name('users');
-
-//    Route::get('users/create',[UsersController::class,'create']);
-//
-//    Route::post('users/store',[UsersController::class,'store']);
 
     Route::resource('users', UsersController::class)->only([
        'index','create','store','edit','update','destroy'
@@ -48,18 +43,61 @@ Route::group([
     ]);
 
     Route::resource('students', StudentsController::class)->only([
-        'index','store','edit','destroy','show','update'
+        'index','store','edit','destroy','show','update','create'
     ]);
 
-    Route::get('students/add', [StudentsController::class, 'add'])->name('students.add');
-
-    Route::get('students/create', [StudentsController::class, 'create'])->name('students.create');
+    Route::get('students/add/{class}', [StudentsController::class, 'add'])->name('students.add');
 
     Route::post('students/storeadd', [StudentsController::class, 'storeadd'])->name('students.storeadd');
 
-//    Route::resource('students',StudentsController::class);
+    Route::resource('teachers', TeachersController::class)->only([
+        'index','create','store','edit','update','destroy','show'
+    ]);
+
+    Route::resource('subjects',SubjectsController::class)->only([
+        'index','create','store','edit','update','destroy'
+    ]);
 
 });
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Sekretariat']
+], function() {
+
+
+
+});
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Wychowawca']
+], function() {
+
+
+
+});
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Nauczyciel']
+], function() {
+
+
+
+});
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Uczen']
+], function() {
+
+
+
+});
+
+
+
 
 
 

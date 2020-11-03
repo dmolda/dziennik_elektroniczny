@@ -18,42 +18,42 @@ class ClassesTableSeeder extends Seeder
 
         $classes = new Classes();
         $classes->name = "1a";
-        $classes->description = $faker->text(150);
+        $classes->description = $faker->realText(150);
         $classes->save();
 
         $classes = new Classes();
         $classes->name = "1b";
-        $classes->description = $faker->text(150);
+        $classes->description = $faker->realText(150);
         $classes->save();
 
         $classes = new Classes();
         $classes->name = "2a";
-        $classes->description = $faker->text(150);
+        $classes->description = $faker->realText(150);
         $classes->save();
 
         $classes = new Classes();
         $classes->name = "3a";
-        $classes->description = $faker->text(150);
+        $classes->description = $faker->realText(150);
         $classes->save();
 
         $classes = new Classes();
         $classes->name = "3b";
-        $classes->description = $faker->text(150);
+        $classes->description = $faker->realText(150);
         $classes->save();
 
         $classes = new Classes();
         $classes->name = "3c";
-        $classes->description = $faker->text(150);
+        $classes->description = $faker->realText(150);
         $classes->save();
 
         $classes = new Classes();
         $classes->name = "4a";
-        $classes->description = $faker->text(150);
+        $classes->description = $faker->realText(150);
         $classes->save();
 
         $classes = new Classes();
         $classes->name = "4b";
-        $classes->description = $faker->text(150);
+        $classes->description = $faker->realText(150);
         $classes->save();
 
     }
