@@ -18,6 +18,7 @@ class UsersController extends Controller
      */
     public function index()
     {
+
         $users = User::orderBy('id','DESC')->paginate(10);
 
         return view('users.index', compact('users'));
@@ -59,7 +60,7 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Users $user
+     * @param  \App\Models\Users $user
      * @return \Illuminate\Http\Response
      */
     public function edit(Users $user)

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SubjectsRequest;
+use App\Models\Subjects;
 use Illuminate\Http\Request;
 
 class SubjectsController extends Controller
@@ -13,7 +15,8 @@ class SubjectsController extends Controller
      */
     public function index()
     {
-        //
+        $subjects_list = Subjects::orderBy('id','DESC')->paginate(10);
+        return view('subjects.index',compact('subjects_list'));
     }
 
     /**
@@ -23,18 +26,19 @@ class SubjectsController extends Controller
      */
     public function create()
     {
-        //
+        return view('subjects.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  SubjectsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubjectsRequest  $request)
     {
-        //
+        Subjects::create($request->all());
+        return redirect()->route('subjects.index')->With('message_add','Przedmiot został dodany!');
     }
 
     /**
@@ -51,34 +55,36 @@ class SubjectsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Subjects $subject
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Subjects $subject)
     {
-        //
+        return view('subjects.edit', compact('subject'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  SubjectsRequest  $request
+     * @param  Subjects $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SubjectsRequest  $request, Subjects $subject)
     {
-        //
+        $subject->update($request->all());
+        return redirect()->route('subjects.index')->With('message_edit','Przedmiot został edytowany!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Subjects $subject
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Subjects $subject)
     {
-        //
+        $subject->delete();
+        return redirect()->route('subjects.index');
     }
 }

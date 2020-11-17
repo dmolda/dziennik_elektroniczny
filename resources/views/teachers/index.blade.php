@@ -28,9 +28,18 @@
             <tr>
                 <td>{{ $teacher->name }} {{ $teacher->second_name }}</td>
                 <td>{{$teacher->last_name}}</td>
-                <td>PRZEDMIOTY
+                <td>
+                    <?php
+                    $subjects_list = \App\Models\TeachersHasSubject::where('teachers_id', $teacher->id)->get();
+                    ?>
+                    @foreach($subjects_list as $subject)
+                        {{ \App\Models\Subjects::find($subject->subjects_id)->name }}
+                        <br>
+                        @endforeach
+
+
                     <br>
-                    <a class="btn btn-info" href="{{route('teachers.create','user_id='.$teacher->users_id)}}">Dodaj przedmiot</a>
+                    <a class="btn btn-info" href="{{route('teachers.create','user_id='.$teacher->users_id)}}">Dodaj przedmiot(zmienić na zarządzaj przedmiotami)</a>
                 </td>
                 <td>{{\App\Models\Users::find($teacher->users_id)->name}}</td>
                 <td>

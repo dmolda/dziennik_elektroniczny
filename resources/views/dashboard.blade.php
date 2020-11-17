@@ -13,6 +13,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <?php
+
+
                 $id = Auth::user()->id;
 
                 if(\App\Models\RolesHasUsers::where('users_id',$id)->get()->count() == 0) {
@@ -79,7 +81,9 @@
                 }
 
                 ?>
-
+                    @if(Auth()->user()->hasAnyRole(['Administrator']))
+                        test
+                    @endif
 
             </div>
         </div>
