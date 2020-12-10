@@ -17,12 +17,18 @@ class CreateClassesHasSubjectsTable extends Migration
             $table->id();
             $table->bigInteger('classes_id')->unsigned();
             $table->bigInteger('subjects_id')->unsigned();
+            $table->bigInteger('teachers_id')->unsigned();
             $table->timestamps();
         });
 
         Schema::table('classes_has_subjects', function (Blueprint $table){
 
             $table->foreign('classes_id')->references('id')->on('classes')->onDelete('cascade');
+        });
+
+        Schema::table('classes_has_subjects', function (Blueprint $table){
+
+            $table->foreign('teachers_id')->references('id')->on('teachers')->onDelete('cascade');
         });
 
         Schema::table('classes_has_subjects', function (Blueprint $table){

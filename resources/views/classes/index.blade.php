@@ -16,7 +16,7 @@
     </div>
 
     <table class="table table-hover">
-        <thead>
+        <thead >
         <tr>
             <th>NAZWA</th>
             <th>OPIS</th>
@@ -33,10 +33,23 @@
 
                 <td>{{ $class->name }}</td>
                 <td>{{ $class->description }}</td>
-                <td>{{ \App\Models\Students::where('classes_id', '=', $class->id)->count() }}
+                <td>Liczba uczniów: {{ \App\Models\Students::where('classes_id', '=', $class->id)->count() }}
                     <a class="btn btn-info" href="{{ route('classes.show', $class->id)}}">Lista uczniów</a></td>
-                <td>przedmioty</td>
-                <td>wychowawca</td>
+                <td>Liczba przedmiotów: {{ \App\Models\ClassesHasSubjects::where('classes_id', $class->id)->count() }}
+                    <?php $class_id = "class_id=".$class->id ;?>
+                    <a class="btn btn-info" href="{{ route('classes.subjects', $class->id)}}">Zarządzaj przedmiotami</a></td>
+                <td><?php
+                    if(\App\Models\Educators::where('classes_id','=',$class->id)->exists()){
+                    $educator = \App\Models\Teachers::where('id','=',\App\Models\Educators::where('classes_id','=',$class->id)->first()->teachers_id)->first();
+                    echo $educator->name . " " . $educator->second_name . " " . $educator->last_name;
+                    }
+                    else{
+                        ?>
+                    <a class="btn btn-info" href="{{route('educators.create')}}"><i class="fas fa-plus"></i></a>
+                        <?php
+                    }
+
+                    ?></td>
                 <td>
 
                     <table>
@@ -60,7 +73,5 @@
         </tbody>
     </table>
     {{ $classes->links() }}
-
-
 
 @endsection

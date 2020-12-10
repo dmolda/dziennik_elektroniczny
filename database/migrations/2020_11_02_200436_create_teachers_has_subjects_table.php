@@ -21,7 +21,7 @@ class CreateTeachersHasSubjectsTable extends Migration
         });
 
         Schema::table('teachers_has_subjects', function (Blueprint $table) {
-           $table->foreign('teachers_id')->references('id')->on('teachers')->onDelete('set null');
+           $table->foreign('teachers_id')->references('id')->on('teachers')->onDelete('cascade');
         });
 
         Schema::table('teachers_has_subjects', function (Blueprint $table) {

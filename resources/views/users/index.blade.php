@@ -7,6 +7,8 @@
 
 
 @section('content')
+
+
     <div class="card-header">
         <p style="text-align: left"> <a class="btn btn-info" href="{{route('users.create')}}">Dodaj nowego użytkownika</a>
         <span style="float: right">
@@ -61,7 +63,7 @@
                         </td>
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
-                            <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" onclick="return confirm('Potwierdź usunięcie użytkownika!')"><i class="far fa-trash-alt"></i></button>
                             {!! Form::close() !!}
 
                         </td>
@@ -76,5 +78,6 @@
     {{ $users->links() }}
 
 
-
 @endsection
+
+
