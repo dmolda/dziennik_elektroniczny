@@ -22,6 +22,7 @@
                     <a class="btn btn-info" href="{{ route('teachers.index') }}">Nauczyciele</a>
                     <a class="btn btn-info" href="{{ route('subjects.index') }}">Przedmioty</a>
                     <a class="btn btn-info" href="{{ route('educators.index') }}">Wychowawcy</a>
+                        <a class="btn btn-info" href="{{ route('schedules.index') }}">Plan lekcji</a>
                     @endif
 
                     @if(Auth()->user()->hasAnyRole(['Sekretariat']))
@@ -37,8 +38,9 @@
                         <?php $teacher_id = \App\Models\Teachers::where('users_id','=',$id)->first()->id; ?>
                             Panel Nauczyciela: <br><br>
                             <a class="btn btn-outline-primary" href="{{route('teachers.show', $teacher_id)}}" role="button">Twoje dane</a>
-                            <a class="btn btn-outline-primary" href="" role="button">Dodaj ocene</a>
+{{--                            <a class="btn btn-outline-primary" href="" role="button">Dodaj ocene</a>--}}
                             <a class="btn btn-outline-primary" href="{{route('marks.index')}}" role="button">Lista Klas</a>
+                            <a class="btn btn-outline-primary" href="{{route('schedules.show_teacher', $teacher_id)}}" role="button">Plan lekcji nauczyciela</a>
                     @endif
 
                     @if(Auth()->user()->hasAnyRole(['Rodzic']))
@@ -46,10 +48,11 @@
                     @endif
 
                     @if(Auth()->user()->hasAnyRole(['Uczen']))
-                        <?php $student_id = \App\Models\Students::where('users_id','=',$id)->first()->id; ?>
+                        <?php $student_id = \App\Models\Students::where('users_id','=',$id)->first()->id; $class_id = \App\Models\Students::where('users_id','=',$id)->first()->classes_id;?>
                             Panel Ucznia <br><br>
                             <a class="btn btn-outline-primary" href="{{route('students.show', $student_id)}}" role="button">Twoje dane</a>
                             <a class="btn btn-outline-primary" href="" role="button">Twoje Oceny</a>
+                            <a class="btn btn-outline-primary" href="{{route('schedules.show', $class_id)}}" role="button">Plan lekcji</a>
                     @endif
 
 

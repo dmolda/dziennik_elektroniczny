@@ -8,7 +8,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/40fd0fe410.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-{{--    <script src="{{asset('js/jquery.js')}}"></script>--}}
+
+
+    {{--    <script src="{{asset('js/jquery.js')}}"></script>--}}
 {{--    <script src="{{asset('js/app.js')}}"></script>--}}
 
 

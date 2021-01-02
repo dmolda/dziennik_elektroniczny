@@ -10,6 +10,7 @@ use App\Http\Controllers\SubjectsController;
 use App\Http\Controllers\EducatorsController;
 use App\Http\Controllers\ClassesHasSubjectsController;
 use App\Http\Controllers\MarksController;
+use App\Http\Controllers\SchedulesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,10 +31,17 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
+
 Route::group([
     'middleware' => 'roles',
     'roles' => ['Administrator']
 ], function() {
+
+    Route::resource('schedules', SchedulesController::class)->only([
+        'index','create','store','edit','update','destroy'
+    ]);
+
+
 
     Route::resource('users', UsersController::class)->only([
        'index','create','store','edit','update','destroy'
@@ -51,7 +59,7 @@ Route::group([
 
     Route::get('classes/subjects/{class}', [ClassesController::class, 'subjects'])->name('classes.subjects');
 
-    Route::get('classes/getTeacher/{id}', [CLassesController::class, 'getTeacher'])->name('classes.getTeacher');
+    Route::get('classes/getTeacher/{id}', [ClassesController::class, 'getTeacher'])->name('classes.getTeacher');
 
 
     Route::resource('students', StudentsController::class)->only([
@@ -112,9 +120,16 @@ Route::group([
     Route::resource('marks', MarksController::class)->only([
         'index','create','store','edit','update','destroy'
     ]);
+
+    Route::post('marks/delete_mark', [MarksController::class, 'delete_mark'])->name('marks.delete_mark');
+
 //    Route::get('classes/subjects/{class}', [ClassesController::class, 'subjects'])->name('classes.subjects');
     Route::get('marks/show_class/{id}' , [MarksController::class, 'show_class'])->name('marks.show_class');
+
+    Route::post('marks/multiple_store' , [MarksController::class, 'multiple_store'])->name('marks.multiple_store');
 });
+
+    Route::get('schedule/show_teacher/{id}', [SchedulesController::class, 'show_teacher'])->name('schedules.show_teacher');
 
 Route::group([
     'middleware' => 'roles',
@@ -123,6 +138,18 @@ Route::group([
 
     Route::resource('students', StudentsController::class)->only([
         'edit','update','show'
+    ]);
+
+});
+
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Uczen','Nauczyciel','Wychowawca','Sekretariat']
+], function() {
+
+    Route::resource('schedules', SchedulesController::class)->only([
+        'show'
     ]);
 
 });
