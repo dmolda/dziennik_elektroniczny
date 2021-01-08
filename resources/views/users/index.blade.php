@@ -57,15 +57,19 @@
                 <td>
 
                     <table>
-
                         <td>
                             <a class="btn btn-info" href="{{ route('users.edit', $user->id)}}"><i class="fas fa-user-edit"></i></a>
                         </td>
+
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) !!}
                             <button class="btn btn-danger" onclick="return confirm('Potwierdź usunięcie użytkownika!')"><i class="far fa-trash-alt"></i></button>
                             {!! Form::close() !!}
 
+                        </td>
+
+                        <td>
+                            <a class="btn btn-info" href="{{ route('messages.show_user_message', $user->id)}}"><i class="far fa-envelope-open"></i></a>
                         </td>
 
                     </table>

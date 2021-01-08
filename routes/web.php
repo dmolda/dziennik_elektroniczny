@@ -11,6 +11,9 @@ use App\Http\Controllers\EducatorsController;
 use App\Http\Controllers\ClassesHasSubjectsController;
 use App\Http\Controllers\MarksController;
 use App\Http\Controllers\SchedulesController;
+use App\Http\Controllers\ParentsController;
+use App\Http\Controllers\ParentsHasStudentsController;
+use App\Http\Controllers\MessagesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,11 +44,21 @@ Route::group([
         'index','create','store','edit','update','destroy'
     ]);
 
+    Route::resource('parents', ParentsController::class)->only([
+        'index','create','store','destroy'
+    ]);
 
-
+    Route::get('parents/search', [ParentsController::class, 'search'])->name('parents.search');
+    Route::post('parents/child_add', [ParentsController::class, 'child_add'])->name('parents.child_add');
+    Route::get('parents/child_manage/{id}' , [ParentsController::class, 'child_manage'])->name('parents.child_manage');
     Route::resource('users', UsersController::class)->only([
        'index','create','store','edit','update','destroy'
     ]);
+
+    Route::resource('parents_has_students', ParentsHasStudentsController::class)->only([
+        'destroy'
+    ]);
+
     Route::resource('roles', RolesController::class)->only([
         'index','destroy','create','store'
     ]);
@@ -86,6 +99,8 @@ Route::group([
         'index','create','store','edit','update','destroy'
     ]);
 
+    Route::get('messages/show_user_message/{id}', [MessagesController::class, 'show_user_message'])->name('messages.show_user_message');
+
 
 
 });
@@ -104,7 +119,9 @@ Route::group([
     'roles' => ['Administrator','Wychowawca']
 ], function() {
 
-
+    Route::resource('educators',EducatorsController::class)->only([
+        'show'
+    ]);
 
 });
 
@@ -145,16 +162,46 @@ Route::group([
 
 Route::group([
     'middleware' => 'roles',
-    'roles' => ['Administrator','Uczen','Nauczyciel','Wychowawca','Sekretariat']
+    'roles' => ['Administrator','Uczen','Nauczyciel','Wychowawca','Sekretariat','Rodzic']
 ], function() {
 
     Route::resource('schedules', SchedulesController::class)->only([
         'show'
     ]);
 
+    Route::resource('marks', MarksController::class)->only([
+        'show'
+    ]);
+
+    Route::resource('messages', MessagesController::class)->only([
+       'index','create','show','update','destroy','store'
+    ]);
+
+//    Route::get('messages/mass_message', [MessagesController::class, 'asd'])->name('messages.mass_message');
+
+    Route::get('message/create_mass_message', [MessagesController::class, 'create_mass_message'])->name('messages.create_mass_message');
+
+    Route::post('message/multiple_store' , [MessagesController::class, 'multiple_store'])->name('messages.multiple_store');
+
+    Route::get('search', [MessagesController::class, 'search']);
+
+    Route::get('messages/messages_sent/{id}',[MessagesController::class, 'messages_sent'])->name('messages.messages_sent');
+
 });
 
 
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Rodzic']
+], function() {
+
+    Route::resource('parents', ParentsController::class)->only([
+        'show','edit','update'
+    ]);
+    Route::get('parents/child/{id}', [ParentsController::class, 'child'])->name('parents.child');
+
+});
 
 
 

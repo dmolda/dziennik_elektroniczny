@@ -30,7 +30,7 @@
                                                                                                            INNER JOIN `roles_has_users` ON `roles`.`id` = `roles_has_users`.`roles_id`)
                                                                                                            INNER JOIN `users` ON `roles`.`id` = `users`.`id`)
                                                                                      WHERE `roles_has_users`.`users_id` = $user_id)
-                                                                                        AND `roles`.`name` NOT IN ('Wychowawca','Nauczyciel','Rodzic','Uczen','Nowy')
+                                                                                        AND `roles`.`name` NOT IN ('Wychowawca','Nauczyciel','Uczen','Nowy')
                                                                                      "));
                 foreach ($roles_name as $role_name){
                     echo "<option value='$role_name->id'>" . $role_name->name . "</option>";

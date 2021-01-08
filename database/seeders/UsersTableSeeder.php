@@ -38,6 +38,13 @@ class UsersTableSeeder extends Seeder
         $user->save();
         $user->roles()->attach(Roles::where('name','nauczyciel')->first()->id);
 
+        $user = new User();
+        $user->name = $faker->name;
+        $user->email = 'rodzic@rodzic.com';
+        $user->password = bcrypt('qwerty12');
+        $user->save();
+        $user->roles()->attach(Roles::where('name','rodzic')->first()->id);
+
         for($i=0;$i<100;$i++){
             $user = new User();
             $user->name = $faker->userName;
@@ -55,6 +62,16 @@ class UsersTableSeeder extends Seeder
             $user->password = bcrypt('qwerty12');
             $user->save();
             $user->roles()->attach(Roles::where('name','nauczyciel')->first()->id);
+
+        }
+
+        for($i=0;$i<10;$i++){
+            $user = new User();
+            $user->name = $faker->userName;
+            $user->email = $faker->email;
+            $user->password = bcrypt('qwerty12');
+            $user->save();
+            $user->roles()->attach(Roles::where('name','rodzic')->first()->id);
 
         }
 

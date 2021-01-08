@@ -16,10 +16,12 @@
             color: red;
         }
     </style>
-
+<?php $teacher_id = \App\Models\Teachers::where('users_id','=',Auth::user()->id)->first()->id;?>
     <div class="card-header">
         <p style="text-align: left">
+            @if($teacher_id == $data['teachers_id'])
             <button class="btn btn-info" data-toggle="modal" data-target="#create_multiple_marks" >Dodaj oceny</button>
+            @endif
             <span style="float: right">
             <a class="btn btn-info" href="{{route('marks.index')}}">Powrót</a>
         </span>
@@ -53,16 +55,22 @@
                         $sum_mark = $sum_mark + ($mark->mark * $mark->weight);
                         $sum_mark_weight = $sum_mark_weight + $mark->weight;
                         ?>
-
+                            @if($teacher_id == $data['teachers_id'])
                         <span data-toggle="modal" data-target="#edit_mark" data-mark_id="{{$mark->id}}" data-mark_desc="{{$mark->mark_desc}}" data-description="{{$mark->description}}" data-weight="{{$mark->weight}}">
                             <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" data-html="true" title="Waga: {{$mark->weight}}&#013Opis: {{$mark->description}}&#013Data: {{date('Y:m:d',strtotime($mark->updated_at))}}">
                                     {{$mark->mark_desc}}
                             </button>
                         </span>
+                            @else
+                                <button type="button" class="btn btn-outline-dark" data-toggle="tooltip" data-html="true" title="Waga: {{$mark->weight}}&#013Opis: {{$mark->description}}&#013Data: {{date('Y:m:d',strtotime($mark->updated_at))}}">
+                                    {{$mark->mark_desc}}
+                                </button>
+                            @endif
                         @endforeach
                     <!-- Button create marks -->
+                        @if($teacher_id == $data['teachers_id'])
                         <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#create_mark" data-student_id="{{$student->id}}"><i class="far fa-plus-square fa-lg"></i></button>
-
+                        @endif
                 </td>
                 <td>
                     <?php
@@ -79,7 +87,7 @@
             </tr>
         @endforeach
     </table>
-
+    @if($teacher_id == $data['teachers_id'])
 
     <!-- Create marks -->
     <div class="modal fade" id="create_mark" tabindex="-1" role="dialog" aria-labelledby="create_mark_label" aria-hidden="true">
@@ -180,7 +188,7 @@
     })
 
 </script>
-
+    @endif
 
 @endsection
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Educators;
 use App\Models\Roles;
+use App\Models\Students;
 use App\Models\Teachers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -59,7 +60,11 @@ class EducatorsController extends Controller
      */
     public function show($id)
     {
-        //
+        $class_id = Educators::find($id)->classes_id;
+        $students_list = Students::where('classes_id','=',$class_id)->get();
+        $subjects_list = \App\Models\ClassesHasSubjects::where('classes_id','=',$class_id)->get();
+
+        return view('educators.show', ['students_list' => $students_list],['subjects_list' => $subjects_list],['class_id' => $class_id]);
     }
 
     /**

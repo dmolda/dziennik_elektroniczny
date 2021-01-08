@@ -47,39 +47,41 @@ class MarksController extends Controller
     public function store(MarkRequest $request)
     {
 
-        if($request->get('mark_desc') == "1"){
+
+        if($request->get('mark_desc') === '1'){
             $mark = 1;
-        }elseif($request->get('mark_desc') == "1+"){
+        }elseif($request->get('mark_desc') === '+1'){
             $mark = 1.3;
-        }elseif($request->get('mark_desc') == "2-"){
+        }elseif($request->get('mark_desc') === "-2"){
             $mark = 1.7;
-        }elseif($request->get('mark_desc') == "2"){
+        }elseif($request->get('mark_desc') === "2"){
             $mark = 2;
-        }elseif($request->get('mark_desc') == "2+"){
+        }elseif($request->get('mark_desc') === "+2"){
             $mark = 2.3;
-        }elseif($request->get('mark_desc') == "3-"){
+        }elseif($request->get('mark_desc') === "-3"){
             $mark = 2.7;
-        }elseif($request->get('mark_desc') == "3"){
+        }elseif($request->get('mark_desc') === "3"){
             $mark = 3;
-        }elseif($request->get('mark_desc') == "3+"){
+        }elseif($request->get('mark_desc') === "+3"){
             $mark = 3.3;
-        }elseif($request->get('mark_desc') == "4-"){
+        }elseif($request->get('mark_desc') === "-4"){
             $mark = 3.7;
-        }elseif($request->get('mark_desc') == "4"){
+        }elseif($request->get('mark_desc') === "4"){
             $mark = 4;
-        }elseif($request->get('mark_desc') == "4+"){
+        }elseif($request->get('mark_desc') === "+4"){
             $mark = 4.3;
-        }elseif($request->get('mark_desc') == "5-"){
+        }elseif($request->get('mark_desc') === "-5"){
             $mark = 4.7;
-        }elseif($request->get('mark_desc') == "5"){
+        }elseif($request->get('mark_desc') === "5"){
             $mark = 5;
-        }elseif($request->get('mark_desc') == "5+"){
+        }elseif($request->get('mark_desc') === "+5"){
             $mark = 5.3;
-        }elseif($request->get('mark_desc') == "6-"){
+        }elseif($request->get('mark_desc') === "-6"){
             $mark = 5.7;
-        }elseif($request->get('mark_desc') == "6"){
+        }elseif($request->get('mark_desc') === "6"){
             $mark = 6;
         }
+
 
 
         DB::table("marks")->insert([
@@ -151,7 +153,9 @@ class MarksController extends Controller
      */
     public function show($id)
     {
-        //
+        $class_id = Students::where('id', '=', $id)->first()->classes_id;
+        $marks = DB::table('classes_has_subjects')->select('subjects_id')->where('classes_id', '=', $class_id)->distinct()->get();
+        return view('marks.show',['marks'=>$marks],['id'=> $id]);
     }
 
     /**
@@ -196,39 +200,39 @@ if ($_POST['submit'] == "delete") {
     $marks->delete();
 }elseif($_POST['submit'] == "save"){
 
-    if($request->get('mark_desc') == "1"){
-            $mark = 1;
-        }elseif($request->get('mark_desc') == "1+"){
-            $mark = 1.3;
-        }elseif($request->get('mark_desc') == "2-"){
-            $mark = 1.7;
-        }elseif($request->get('mark_desc') == "2"){
-            $mark = 2;
-        }elseif($request->get('mark_desc') == "2+"){
-            $mark = 2.3;
-        }elseif($request->get('mark_desc') == "3-"){
-            $mark = 2.7;
-        }elseif($request->get('mark_desc') == "3"){
-            $mark = 3;
-        }elseif($request->get('mark_desc') == "3+"){
-            $mark = 3.3;
-        }elseif($request->get('mark_desc') == "4-"){
-            $mark = 3.7;
-        }elseif($request->get('mark_desc') == "4"){
-            $mark = 4;
-        }elseif($request->get('mark_desc') == "4+"){
-            $mark = 4.3;
-        }elseif($request->get('mark_desc') == "5-"){
-            $mark = 4.7;
-        }elseif($request->get('mark_desc') == "5"){
-            $mark = 5;
-        }elseif($request->get('mark_desc') == "5+"){
-            $mark = 5.3;
-        }elseif($request->get('mark_desc') == "6-"){
-            $mark = 5.7;
-        }elseif($request->get('mark_desc') == "6"){
-            $mark = 6;
-        }
+    if($request->get('mark_desc') === '1'){
+        $mark = 1;
+    }elseif($request->get('mark_desc') === '+1'){
+        $mark = 1.3;
+    }elseif($request->get('mark_desc') === "-2"){
+        $mark = 1.7;
+    }elseif($request->get('mark_desc') === "2"){
+        $mark = 2;
+    }elseif($request->get('mark_desc') === "+2"){
+        $mark = 2.3;
+    }elseif($request->get('mark_desc') === "-3"){
+        $mark = 2.7;
+    }elseif($request->get('mark_desc') === "3"){
+        $mark = 3;
+    }elseif($request->get('mark_desc') === "+3"){
+        $mark = 3.3;
+    }elseif($request->get('mark_desc') === "-4"){
+        $mark = 3.7;
+    }elseif($request->get('mark_desc') === "4"){
+        $mark = 4;
+    }elseif($request->get('mark_desc') === "+4"){
+        $mark = 4.3;
+    }elseif($request->get('mark_desc') === "-5"){
+        $mark = 4.7;
+    }elseif($request->get('mark_desc') === "5"){
+        $mark = 5;
+    }elseif($request->get('mark_desc') === "+5"){
+        $mark = 5.3;
+    }elseif($request->get('mark_desc') === "-6"){
+        $mark = 5.7;
+    }elseif($request->get('mark_desc') === "6"){
+        $mark = 6;
+    }
 
         DB::table("marks")
             ->where('id',$request->id)

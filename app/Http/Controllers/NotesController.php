@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RolesHasUsers;
 use Illuminate\Http\Request;
-use App\Models\Roles;
-use Illuminate\Support\Facades\DB;
-class RolesController extends Controller
+
+class NotesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,15 +13,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $user_id = $_GET['user_id'];
-        $roles_name = DB::table('roles_has_users')
-            ->join('roles','roles_id','=','roles.id')
-            ->join('users','users_id','=','users.id')
-            ->select('roles.name','roles_has_users.id')
-            ->where('roles_has_users.users_id','=',$user_id)
-            ->orderBy('roles.id','ASC')
-            ->get();
-        return view('roles.index',['roles_name' => $roles_name],['user_id'=> $user_id]);
+        //
     }
 
     /**
@@ -33,7 +23,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        //
     }
 
     /**
@@ -44,15 +34,7 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        RolesHasUsers::create($request->all());
-        $user_id = "user_id=".$request->get('users_id');
-        if($request->get('roles_id') == 5){
-            DB::table('parents')->insert([
-               'users_id' => $request->get('users_id'),
-            ]);
-        }
-
-        return redirect()->route('roles.index', $user_id);
+        //
     }
 
     /**
@@ -92,14 +74,11 @@ class RolesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy($id)
     {
-        DB::table('roles_has_users')
-            ->where('id', '=', $id)
-            ->delete();
-        return redirect()->back();
+        //
     }
 }
