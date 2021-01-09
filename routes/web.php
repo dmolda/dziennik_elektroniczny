@@ -14,6 +14,7 @@ use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\ParentsController;
 use App\Http\Controllers\ParentsHasStudentsController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\NotesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -201,6 +202,19 @@ Route::group([
     ]);
     Route::get('parents/child/{id}', [ParentsController::class, 'child'])->name('parents.child');
 
+});
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Nauczyciel','Wychowawca','Sekretariat']
+], function() {
+
+    Route::resource('notes', NotesController::class)->only([
+        'index','create','show','update','destroy','store'
+    ]);
+//    Route::get('search_student', [NotesController::class, 'search_student']);
+
+    Route::get('search_students', [NotesController::class, 'search']);
 });
 
 

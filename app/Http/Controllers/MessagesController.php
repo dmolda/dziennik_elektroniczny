@@ -9,6 +9,7 @@ use App\Models\ParentsHasStudents;
 use App\Models\Students;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Classes;
 use DB;
 
 class MessagesController extends Controller
@@ -130,6 +131,26 @@ class MessagesController extends Controller
                 }
                 $i = 0;
                 return Response($output);
+            }elseif(isset($request->students)){
+                $output = "";
+                $students = DB::table('students')
+                    ->where('name', 'LIKE', '%' . $request->search . "%")
+                    ->orWhere('second_name', 'LIKE', '%' . $request->search . "%")
+                    ->orWhere('last_name', 'LIKE', '%' . $request->search . "%")
+                    ->take(5)
+                    ->get();
+
+                if ($students) {
+                    foreach ($students as $key => $student) {
+                        $output .= '<tr>' .
+                            '<td>' . $student->name . " " . $student->second_name . '</td>' .
+                            '<td>' . $student->last_name . '</td>' .
+                            '<td>' . Classes::where('id', '=', $student->classes_id)->first()->name . '</td>' .
+                            '</tr>';
+                    }
+                    return Response($output);
+                }
+
             }
         }
     }
