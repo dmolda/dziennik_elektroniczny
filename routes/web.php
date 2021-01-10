@@ -42,7 +42,7 @@ Route::group([
 ], function() {
 
     Route::resource('schedules', SchedulesController::class)->only([
-        'index','create','store','edit','update','destroy'
+        'create','store','edit','update','destroy'
     ]);
 
     Route::resource('parents', ParentsController::class)->only([
@@ -167,7 +167,7 @@ Route::group([
 ], function() {
 
     Route::resource('schedules', SchedulesController::class)->only([
-        'show'
+        'index', 'show'
     ]);
 
     Route::resource('marks', MarksController::class)->only([
@@ -187,6 +187,10 @@ Route::group([
     Route::get('search', [MessagesController::class, 'search']);
 
     Route::get('messages/messages_sent/{id}',[MessagesController::class, 'messages_sent'])->name('messages.messages_sent');
+
+    Route::resource('notes', NotesController::class)->only([
+        'index','create','show','update','destroy','store'
+    ]);
 
 });
 
@@ -209,9 +213,9 @@ Route::group([
     'roles' => ['Administrator','Nauczyciel','Wychowawca','Sekretariat']
 ], function() {
 
-    Route::resource('notes', NotesController::class)->only([
-        'index','create','show','update','destroy','store'
-    ]);
+//    Route::resource('notes', NotesController::class)->only([
+//        'index','create','show','update','destroy','store'
+//    ]);
 //    Route::get('search_student', [NotesController::class, 'search_student']);
 
     Route::get('search_students', [NotesController::class, 'search']);

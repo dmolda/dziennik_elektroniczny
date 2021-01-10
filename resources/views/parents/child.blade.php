@@ -30,7 +30,8 @@
                 <td>{{\App\Models\Students::find($child->students_id)->name}} {{\App\Models\Students::find($child->students_id)->second_name}} {{\App\Models\Students::find($child->students_id)->last_name}}</td>
                 <td>{{\App\Models\Classes::find(\App\Models\Students::find($child->students_id)->classes_id)->name}}</td>
                 <td><a class="btn btn-outline-primary" href="{{route('schedules.show', \App\Models\Students::where('id','=',$child->students_id)->first()->classes_id)}}" role="button">Plan lekcji</a>
-                    <a class="btn btn-outline-primary" href="{{route('marks.show',$child->students_id)}}" role="button">Pokaż oceny</a></td>
+                    <a class="btn btn-outline-primary" href="{{route('marks.show',$child->students_id)}}" role="button">Pokaż oceny</a>
+                <a class="btn btn-outline-primary" href="{{route('notes.show',$child->students_id)}}" role="button">Pokaż uwagi</a></td>
             </tr>
         @endforeach
     </table>

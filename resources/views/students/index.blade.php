@@ -12,6 +12,7 @@
             <a class="btn btn-info" href="{{route('users.index')}}">Powrót</a>
         </span>
         </p>
+        <br><br>
     </div>
 
     <table class="table table-hover">

@@ -5,15 +5,13 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
-                    </a>
+                   <a class="btn" href="{{route('dashboard')}}" role="button"><i class="fas fa-graduation-cap fa-2x"></i></a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        Strona główna
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -30,51 +28,45 @@
                     <x-slot name="content">
                         <!-- Account Management -->
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Manage Account') }}
+                            {{ __('Zarządzaj kontem') }}
                         </div>
 
                         <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                            {{ __('Profile') }}
+                            {{ __('Profil') }}
                         </x-jet-dropdown-link>
+                        <?php
+                        $users_id = Auth::user()->id;
+                        ?>
 
-                        @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                            <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
-                                {{ __('API Tokens') }}
+                        @if(Auth()->user()->hasAnyRole(['Wychowawca']))
+
+                            <x-jet-dropdown-link href="{{ route('teachers.show',\App\Models\Teachers::where('users_id',$users_id)->first()->id) }}">
+                                {{ __('Twoje dane') }}
                             </x-jet-dropdown-link>
+
+                        @elseif(Auth()->user()->hasAnyRole(['Nauczyciel']))
+
+                            <x-jet-dropdown-link href="{{ route('teachers.show',\App\Models\Teachers::where('users_id',$users_id)->first()->id) }}">
+                                {{ __('Twoje dane') }}
+                            </x-jet-dropdown-link>
+
+                        @elseif(Auth()->user()->hasAnyRole(['Rodzic']))
+
+                            <x-jet-dropdown-link href="{{ route('parents.show',\App\Models\Parents::where('users_id',$users_id)->first()->id) }}">
+                                {{ __('Twoje dane') }}
+                            </x-jet-dropdown-link>
+
+                        @elseif(Auth()->user()->hasAnyRole(['Uczen']))
+
+                            <x-jet-dropdown-link href="{{ route('students.show',\App\Models\Students::where('users_id',$users_id)->first()->id) }}">
+                                {{ __('Twoje dane') }}
+                            </x-jet-dropdown-link>
+
                         @endif
+
 
                         <div class="border-t border-gray-100"></div>
 
-                        <!-- Team Management -->
-                        @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Team') }}
-                            </div>
-
-                            <!-- Team Settings -->
-                            <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                {{ __('Team Settings') }}
-                            </x-jet-dropdown-link>
-
-                            @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                    {{ __('Create New Team') }}
-                                </x-jet-dropdown-link>
-                            @endcan
-
-                            <div class="border-t border-gray-100"></div>
-
-                            <!-- Team Switcher -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Switch Teams') }}
-                            </div>
-
-                            @foreach (Auth::user()->allTeams() as $team)
-                                <x-jet-switchable-team :team="$team" />
-                            @endforeach
-
-                            <div class="border-t border-gray-100"></div>
-                        @endif
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -83,7 +75,7 @@
                             <x-jet-dropdown-link href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                                             this.closest('form').submit();">
-                                {{ __('Logout') }}
+                                {{ __('Wyloguj') }}
                             </x-jet-dropdown-link>
                         </form>
                     </x-slot>

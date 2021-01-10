@@ -30,7 +30,13 @@
             <tr>
 
                 <td>{{ $class->name }}</td>
-                <td><a class="btn btn-info" href="{{route('schedules.show', $class->id)}}">Zarządzaj planem lekcji</a></td>
+                <td>@if(Auth()->user()->hasAnyRole(['Administrator']))
+                    <a class="btn btn-info" href="{{route('schedules.show', $class->id)}}">Zarządzaj planem lekcji</a>
+                    @else
+                        <a class="btn btn-info" href="{{route('schedules.show', $class->id)}}">Pokaż plan lekcji</a>
+                    @endif
+                </td>
+
 
             </tr>
         @endforeach
