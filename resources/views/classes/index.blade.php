@@ -59,7 +59,7 @@
                         </td>
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['classes.destroy', $class->id]]) !!}
-                            <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" onclick="return confirm('Potwierdź usunięcie klasy!')"><i class="far fa-trash-alt"></i></button>
                             {!! Form::close() !!}
 
                         </td>

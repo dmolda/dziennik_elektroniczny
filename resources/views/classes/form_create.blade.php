@@ -7,6 +7,7 @@
 
         @foreach($errors->all() as $error)
             <li> {{$error}}</li>
+            {{header("Refresh:2")}}
         @endforeach
     </ul>
 @endif

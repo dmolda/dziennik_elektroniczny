@@ -25,7 +25,7 @@ class CreateEducatorsTable extends Migration
         });
 
         Schema::table('educators', function (Blueprint $table) {
-            $table->foreign('classes_id')->references('id')->on('classes')->onDelete('set null');
+            $table->foreign('classes_id')->references('id')->on('classes')->onDelete('cascade');
         });
     }
 

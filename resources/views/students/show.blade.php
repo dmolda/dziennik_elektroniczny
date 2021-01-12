@@ -1,7 +1,9 @@
 @extends('layout')
 
 @section('page_info')
-    {{ __('Lista uczniów') }}
+    {{ __('Uczeń:') }}
+    {{$student->name}}
+    {{$student->last_name}}
 @endsection
 
 @section('content')

@@ -33,7 +33,7 @@
                     </td>
                 <td>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id]]) !!}
-                    <button class="btn btn-danger">USUŃ</button>
+                    <button class="btn btn-danger" onclick="return confirm('Potwierdź usunięcie roli!')">USUŃ</button>
                     {!! Form::close() !!}</td>
             </tr>
                 @endforeach

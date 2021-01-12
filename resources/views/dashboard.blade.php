@@ -44,6 +44,14 @@
             -webkit-box-shadow: inset 0 0 20px 10px white;
             box-shadow: inset 0 0 20px 10px white;
         }
+
+        #guest {
+            width: 100%;
+            background: #F2ECA7;
+
+            -webkit-box-shadow: inset 0 0 20px 10px white;
+            box-shadow: inset 0 0 20px 10px white;
+        }
         .borderless td, .borderless th {
             border: none;
         }
@@ -85,6 +93,10 @@
                     @if(Auth()->user()->hasAnyRole(['Uczen']))
                         @include('user_panel.student')
 
+                    @endif
+
+                @if(\App\Models\RolesHasUsers::where('users_id',$id)->count() == 0)
+                        @include('user_panel.guest')
                     @endif
 
 

@@ -6,6 +6,8 @@ use App\Http\Requests\TeachersRequest;
 use App\Models\Roles;
 use App\Models\RolesHasUsers;
 use App\Models\Teachers;
+use App\Models\TeachersHasSubject;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,6 +34,41 @@ class TeachersController extends Controller
     {
         return view('teachers.create');
     }
+
+
+    public function search_teachers(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = "";
+            $teachers = DB::table('teachers')
+                ->where('name', 'LIKE', '%' . $request->search . "%")
+                ->orWhere('second_name', 'LIKE', '%' . $request->search . "%")
+                ->orWhere('last_name', 'LIKE', '%' . $request->search . "%")
+                ->offset(10)
+                ->limit(5)
+                ->get();
+
+            if ($teachers) {
+
+                foreach ($teachers as $key => $teacher) {
+                    $output .= '<tr>' .
+                        '<td>' . $teacher->name . " " . $teacher->second_name . '</td>' .
+                        '<td>' . $teacher->last_name . '</td>' .
+                        '<td>' . '<a class="btn btn-info" href="' . route('teachers.manage_subjects', $teacher->id).'"> Zarządzaj przedmiotami</a>' . '</td>' .
+                        '<td>' . Users::find($teacher->users_id)->name . '</td>' .
+                        '<td>' . '<a class="btn btn-info" href="' . route('teachers.edit', $teacher->id).'"> <i class="fas fa-user-edit"></i></a>' . '</td>' .
+                        '<td> <form method="POST" action='.route('teachers.destroy', $teacher->id).' accept-charset="UTF-8">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                <button class="btn btn-danger" onclick="return confirm(\'Potwierdź usunięcie nauczyciela!\')"><i class="far fa-trash-alt"></i></button>
+                                </form></td>' .
+                        '</tr>';
+                }
+                return Response($output);
+            }
+        }
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -99,6 +136,18 @@ class TeachersController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function manage_subjects($id)
+    {
+        $subjects = TeachersHasSubject::where('teachers_id',$id)->get();
+        return view('teachers.manage_subjects',['subjects' => $subjects],['id' => $id]);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  Teachers $teacher
@@ -134,6 +183,8 @@ class TeachersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $teacher = Teachers::find($id);
+        $teacher->delete();
+        return redirect()->back();
     }
 }

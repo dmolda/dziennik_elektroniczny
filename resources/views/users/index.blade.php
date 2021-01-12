@@ -7,10 +7,16 @@
 
 
 @section('content')
-
+    <script src="{{asset('js/jquery.js')}}"></script>
 
     <div class="card-header">
-        <p style="text-align: left"> <a class="btn btn-info" href="{{route('users.create')}}">Dodaj nowego użytkownika</a>
+
+        <p style="text-align: left">
+            {!! Form::label('search', "Wyszukaj:") !!}
+            {!! Form::text('search', null, ['class'=>'form-control']) !!} <br>
+
+            <a class="btn btn-info" href="{{route('users.create')}}">Dodaj nowego użytkownika</a>
+
         <span style="float: right">
             <a class="btn btn-info" href="{{route('dashboard')}}">Powrót</a>
         </span>
@@ -25,6 +31,7 @@
             <th>ROLE</th>
             <th>OPCJE</th>
         </tr>
+        <tbody></tbody>
         @foreach($users as $user)
             <tr>
 
@@ -80,6 +87,23 @@
         @endforeach
     </table>
     {{ $users->links() }}
+
+    <script type="text/javascript">
+        $('#search').on('keyup',function(){
+            $value=$(this).val();
+            $.ajax({
+                type : 'get',
+                url : '{{URL::to('search_users')}}',
+                data:{'search':$value},
+                success:function(data){
+                    $('tbody').html(data);
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
 
 
 @endsection

@@ -46,6 +46,40 @@ class UsersController extends Controller
         return redirect()->route('users.index');
     }
 
+    public function search_users(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = "";
+            $result_users = DB::table('users')
+                ->where('name', 'LIKE', '%' . $request->search . "%")
+                ->orWhere('email', 'LIKE', '%' . $request->search . "%")
+                ->offset(10)
+                ->limit(5)
+                ->get();
+
+            if ($result_users) {
+
+                    foreach ($result_users as $key => $result) {
+                        $output .= '<tr>' .
+                            '<td>' . $result->name . '</td>' .
+                            '<td>' . $result->email . '</td>' .
+                            '<td>' . '<a class="btn btn-info" href="/roles?user_id=' . $result->id . '"> Zarządzaj rolami</a>' . '</td>' .
+                            '<td>  <table>
+                                    <td>' . '<a class="btn btn-info" href="' . route('users.edit', $result->id) . '"> <i class="fas fa-user-edit"></i></a>' . '</td>
+                                    <td> <form method="POST" action='.route('users.destroy', $result->id).' accept-charset="UTF-8">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                <button class="btn btn-danger" onclick="return confirm(\'Potwierdź usunięcie użytkownika!\')"><i class="far fa-trash-alt"></i></button>
+                                </form></td>
+                                <td>' . '<a class="btn btn-info" href="' . route('messages.show_user_message', $result->id) . '"> <i class="far fa-envelope-open"></i></a>' . '</td>
+                                    </table>  </td>' .
+                            '</tr>';
+                }
+                return Response($output);
+            }
+        }
+    }
+
     /**
      * Display the specified resource.
      *

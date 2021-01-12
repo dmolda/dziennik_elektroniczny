@@ -41,7 +41,22 @@
             $message_subject = "RE:" . \App\Models\Messages::find($_GET['message_id'])->message_subject;
             ?>
         <input type="hidden" name="recipient" id="recipient" value="{{$user_id}}">
-                {!! Form::label('recipient', "Odbiorca:") !!} <b>{{\App\Models\Users::find($user_id)->name}}</b> <br>
+                {!! Form::label('recipient', "Odbiorca:") !!} <b>
+                    @if(\App\Models\RolesHasUsers::where(['users_id' => $user_id,'roles_id' => '4'])->first())
+                        {{\App\Models\Teachers::where('users_id', $user_id)->first()->name}} {{\App\Models\Teachers::where('users_id', $user_id)->first()->last_name}}
+
+                    @elseif(\App\Models\RolesHasUsers::where(['users_id' => $user_id,'roles_id' => '5'])->first())
+                        {{\App\Models\Parents::where('users_id', $user_id)->first()->name}} {{\App\Models\Parents::where('users_id', $user_id)->first()->last_name}}
+
+
+                    @elseif(\App\Models\RolesHasUsers::where(['users_id' => $user_id,'roles_id' => '6'])->first())
+                        {{\App\Models\Students::where('users_id', $user_id)->first()->name}} {{\App\Models\Students::where('users_id', $user_id)->first()->last_name}}
+
+                    @elseif(\App\Models\RolesHasUsers::where(['users_id' => $user_id,'roles_id' => '1'])->first())
+                        Administracja
+
+                    @endif
+                </b> <br>
 
 
                     <div class="form-group">

@@ -33,6 +33,39 @@ class StudentsController extends Controller
         return view('students.add',['student_list' => $student_list]);
     }
 
+
+    public function students_search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = "";
+            $students = DB::table('students')
+                ->where('name', 'LIKE', '%' . $request->search . "%")
+                ->orWhere('second_name', 'LIKE', '%' . $request->search . "%")
+                ->orWhere('last_name', 'LIKE', '%' . $request->search . "%")
+                ->take(5)
+                ->get();
+
+            if ($students) {
+
+                foreach ($students as $key => $student) {
+                    $output .= '<tr>' .
+                        '<td>' . $student->name . " " . $student->second_name . '</td>' .
+                        '<td>' . $student->last_name . '</td>' .
+                        '<td>' . Classes::find($student->classes_id)->name . '</td>' .
+                        '<td>' . Users::find($student->users_id)->name . '</td>' .
+                        '<td>' . '<a class="btn btn-info" href="' . route('students.edit', $student->id).'"> <i class="fas fa-user-edit"></i></a>' . '</td>' .
+                        '<td> <form method="POST" action='.route('students.destroy', $student->id).' accept-charset="UTF-8">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                <button class="btn btn-danger" onclick="return confirm(\'Potwierdź usunięcie ucznia!\')"><i class="far fa-trash-alt"></i></button>
+                                </form></td>' .
+                        '</tr>';
+                }
+                return Response($output);
+            }
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -112,6 +145,9 @@ class StudentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Students::find($id);
+        $student->delete();
+        return redirect()->back();
+
     }
 }

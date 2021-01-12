@@ -105,7 +105,7 @@ class MarksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  MarkMultipleRequest $request
+     * @param  App\Http\Requests\MarkMultipleRequest $request
      * @return \Illuminate\Http\Response
      */
     public function multiple_store(MarkMultipleRequest $request)
@@ -113,7 +113,41 @@ class MarksController extends Controller
         $count_students = \App\Models\Students::where('classes_id', '=', $request->get('classes_id'))->count();
         for($i=1;$i<=$count_students;$i++){
             if(!empty($request->get($i))) {
-                $mark = Marks::getMark($request->get($i));
+
+                if($request->get($i) === '1'){
+                    $mark = 1;
+                }elseif($request->get($i) === '+1'){
+                    $mark = 1.3;
+                }elseif($request->get($i) === "-2"){
+                    $mark = 1.7;
+                }elseif($request->get($i) === "2"){
+                    $mark = 2;
+                }elseif($request->get($i) === "+2"){
+                    $mark = 2.3;
+                }elseif($request->get($i) === "-3"){
+                    $mark = 2.7;
+                }elseif($request->get($i) === "3"){
+                    $mark = 3;
+                }elseif($request->get($i) === "+3"){
+                    $mark = 3.3;
+                }elseif($request->get($i) === "-4"){
+                    $mark = 3.7;
+                }elseif($request->get($i) === "4"){
+                    $mark = 4;
+                }elseif($request->get($i) === "+4"){
+                    $mark = 4.3;
+                }elseif($request->get($i) === "-5"){
+                    $mark = 4.7;
+                }elseif($request->get($i) === "5"){
+                    $mark = 5;
+                }elseif($request->get($i) === "+5"){
+                    $mark = 5.3;
+                }elseif($request->get($i) === "-6"){
+                    $mark = 5.7;
+                }elseif($request->get($i) === "6"){
+                    $mark = 6;
+                }
+
                 $student_id = $request->get("student".$i);
                 DB::table("marks")->insert([
                     'mark_desc' => $request->get($i),

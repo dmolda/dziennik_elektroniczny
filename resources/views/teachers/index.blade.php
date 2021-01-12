@@ -5,14 +5,22 @@
 @endsection
 
 @section('content')
-
+    <script src="{{asset('js/jquery.js')}}"></script>
     <div class="card-header">
-        <p style="text-align: right">
-{{--            <span style="float: right">--}}
+
+        <p style="text-align: left">
+            {!! Form::label('search', "Wyszukaj:") !!}
+            {!! Form::text('search', null, ['class'=>'form-control']) !!} <br>
+
+
+            <span style="float: right">
             <a class="btn btn-info" href="{{route('dashboard')}}">Powrót</a>
-{{--        </span>--}}
-        </p>
+        </span>
+        </p><br><br>
+
     </div>
+
+
 
     <table class="table table-hover">
         <tr>
@@ -23,6 +31,7 @@
             <th>EDYTUJ</th>
             <th>USUŃ</th>
         </tr>
+        <tbody></tbody>
 
         @foreach($teacher_list as $teacher)
             <tr>
@@ -39,7 +48,7 @@
 
 
                     <br>
-                    <a class="btn btn-info" href="{{route('teachers.create','user_id='.$teacher->users_id)}}">Dodaj przedmiot(zmienić na zarządzaj przedmiotami)</a>
+                        <a class="btn btn-info" href="{{route('teachers.manage_subjects', $teacher->id)}}">Zarządzaj przedmiotami</a>
                 </td>
                 <td>{{\App\Models\Users::find($teacher->users_id)->name}}</td>
                 <td>
@@ -47,7 +56,7 @@
                 </td>
                 <td>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['teachers.destroy', $teacher->id]]) !!}
-                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-danger" onclick="return confirm('Potwierdź usunięcie nauczyciela!')"><i class="fas fa-trash"></i></button>
                     {!! Form::close() !!}
                 </td>
             </tr>
@@ -60,6 +69,21 @@
 
     {{ $teacher_list->links() }}
 
-
+    <script type="text/javascript">
+        $('#search').on('keyup',function(){
+            $value=$(this).val();
+            $.ajax({
+                type : 'get',
+                url : '{{URL::to('search_teacher')}}',
+                data:{'search':$value},
+                success:function(data){
+                    $('tbody').html(data);
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
 
 @endsection

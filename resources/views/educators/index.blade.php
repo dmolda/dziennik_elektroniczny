@@ -34,7 +34,7 @@
                 <td>{{\App\Models\Users::find($teacher->users_id)->name}}</td>
                 <td>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['educators.destroy', $educator->id]]) !!}
-                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-danger" onclick="return confirm('Potwierdź usunięcie wychowawcy!')"><i class="fas fa-trash"></i></button>
                     {!! Form::close() !!}
                 </td>
             </tr>

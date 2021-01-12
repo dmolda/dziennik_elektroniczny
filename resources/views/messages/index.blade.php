@@ -30,7 +30,22 @@
             @if($message->status != "deleted")
             <tr>
 
-                <td>{{ \App\Models\Users::find($message->sender)->name }}</td>
+                <td>
+                    @if(\App\Models\RolesHasUsers::where(['users_id' => $message->sender,'roles_id' => '4'])->first())
+                        {{\App\Models\Teachers::where('users_id', $message->sender)->first()->name}} {{\App\Models\Teachers::where('users_id', $message->sender)->first()->last_name}}
+
+                    @elseif(\App\Models\RolesHasUsers::where(['users_id' => $message->sender,'roles_id' => '5'])->first())
+                        {{\App\Models\Parents::where('users_id', $message->sender)->first()->name}} {{\App\Models\Parents::where('users_id', $message->sender)->first()->last_name}}
+
+
+                    @elseif(\App\Models\RolesHasUsers::where(['users_id' => $message->sender,'roles_id' => '6'])->first())
+                        {{\App\Models\Students::where('users_id', $message->sender)->first()->name}} {{\App\Models\Students::where('users_id', $message->sender)->first()->last_name}}
+
+                    @elseif(\App\Models\RolesHasUsers::where(['users_id' => $message->sender,'roles_id' => '1'])->first())
+                        Administracja
+
+                    @endif
+                </td>
 
                 <td>@if($message->status == 'new')
                     <b>{{$message->message_subject }}</b>

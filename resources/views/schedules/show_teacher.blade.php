@@ -19,7 +19,8 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>LEKCJA</th>
+            <th>NR</th>
+            <th>GODZINA</th>
             <th>PONIEDZIAŁEK</th>
             <th>WTOREK</th>
             <th>ŚRODA</th>
@@ -35,6 +36,7 @@
 
         echo "<tr>";
         echo "<td>" . $i . "</td>";
+        echo "<td>". substr(\App\Models\LessonHours::find($i)->start_time,0,5) . "-" . substr(\App\Models\LessonHours::find($i)->end_time,0,5) . "</td>";
         for($j=1;$j<=5;$j++){
         $class_id = NULL;
         $subjects_id = NULL;

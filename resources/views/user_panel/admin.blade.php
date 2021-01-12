@@ -34,7 +34,7 @@ $users_without_role = count(\App\Models\Users::all()) - count($users_with_role);
 
     <div id="box">
 
-        <p id="text"><a class="btn" href="" role="button"><i class="far fa-comment-dots fa-3x" > Wiadomości</i></a></p>
+        <p id="text"><a class="btn" href="{{route('messages.index')}}" role="button"><i class="far fa-comment-dots fa-3x" > Wiadomości</i></a></p>
         <table class='table borderless' id="text">
             <tr> <td style="padding-left:8%">
                     <a class="btn" href="{{route('messages.index')}}" role="button">Masz {{$new_message}} nowe wiadomości</a>

@@ -36,7 +36,7 @@
                     <a class="btn btn-info" href="{{route('parents.show', $parent->id)}}"><i class="fas fa-user-edit"></i></a>
                     <a class="btn btn-info" href="{{route('parents.create', 'parents_id='.$parent->id)}}"><i class="fas fa-user-graduate"></i></a>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['parents.destroy', $parent->id]]) !!}
-                    <button class="btn btn-danger">USUŃ(dodać)</button>
+                    <button class="btn btn-danger" onclick="return confirm('Potwierdź usunięcie rodzica!')"><i class="far fa-trash-alt"></i></button>
                     {!! Form::close() !!}</td>
             </tr>
         @endforeach

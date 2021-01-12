@@ -2,7 +2,7 @@
 
 
 @section('page_info')
-    {{ __('Lista Klas') }}
+    {{ __('Lista dzieci') }}
 @endsection
 
 

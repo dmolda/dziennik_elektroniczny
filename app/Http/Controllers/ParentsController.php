@@ -168,6 +168,8 @@ class ParentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $parent = Parents::find($id);
+        $parent->destroy();
+        return redirect()->back();
     }
 }

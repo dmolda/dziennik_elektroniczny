@@ -15,6 +15,8 @@ use App\Http\Controllers\ParentsController;
 use App\Http\Controllers\ParentsHasStudentsController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotesController;
+use App\Http\Controllers\TeachersHasSubjectController;
+use App\Http\Controllers\LessonHoursController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,10 +42,55 @@ Route::group([
     'middleware' => 'roles',
     'roles' => ['Administrator']
 ], function() {
-
-    Route::resource('schedules', SchedulesController::class)->only([
-        'create','store','edit','update','destroy'
+        // ROLES
+    Route::resource('roles', RolesController::class)->only([
+        'index','destroy','create','store'
     ]);
+
+        //USERS
+
+    Route::resource('users', UsersController::class)->only([
+        'index','create','store','edit','update','destroy'
+    ]);
+
+    Route::get('search_users', [UsersController::class, 'search_users']);
+
+
+});
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Sekretariat']
+], function() {
+
+        //STUDENTS
+    Route::resource('students', StudentsController::class)->only([
+        'index','create','store','destroy'
+    ]);
+
+    Route::get('students_search', [StudentsController::class, 'students_search']);
+
+    Route::get('students/add/{class}', [StudentsController::class, 'add'])->name('students.add');
+
+    Route::post('students/storeadd', [StudentsController::class, 'storeadd'])->name('students.storeadd');
+
+        //TEACHERS
+
+    Route::resource('teachers', TeachersController::class)->only([
+        'index','create','store','destroy'
+    ]);
+
+    Route::get('search_teacher', [TeachersController::class, 'search_teachers']);
+
+    Route::get('teachers/manage_subjects/{id}', [TeachersController::class, 'manage_subjects'])->name('teachers.manage_subjects');
+
+        //EDUCATORS
+
+    Route::resource('educators',EducatorsController::class)->only([
+        'index','create','store','edit','update','destroy'
+    ]);
+
+        //PARENTS
 
     Route::resource('parents', ParentsController::class)->only([
         'index','create','store','destroy'
@@ -52,17 +99,9 @@ Route::group([
     Route::get('parents/search', [ParentsController::class, 'search'])->name('parents.search');
     Route::post('parents/child_add', [ParentsController::class, 'child_add'])->name('parents.child_add');
     Route::get('parents/child_manage/{id}' , [ParentsController::class, 'child_manage'])->name('parents.child_manage');
-    Route::resource('users', UsersController::class)->only([
-       'index','create','store','edit','update','destroy'
-    ]);
 
-    Route::resource('parents_has_students', ParentsHasStudentsController::class)->only([
-        'destroy'
-    ]);
+        //CLASSES
 
-    Route::resource('roles', RolesController::class)->only([
-        'index','destroy','create','store'
-    ]);
     Route::resource('classes', ClassesController::class)->only([
         'index','destroy','create','store','edit','update','show'
     ]);
@@ -75,41 +114,43 @@ Route::group([
 
     Route::get('classes/getTeacher/{id}', [ClassesController::class, 'getTeacher'])->name('classes.getTeacher');
 
-
-    Route::resource('students', StudentsController::class)->only([
-        'index','create','store','destroy'
-    ]);
-
-    Route::get('students/add/{class}', [StudentsController::class, 'add'])->name('students.add');
-
-    Route::post('students/storeadd', [StudentsController::class, 'storeadd'])->name('students.storeadd');
-
-    Route::resource('teachers', TeachersController::class)->only([
-        'index','create','store','destroy'
-    ]);
+        //SUBJECTS
 
     Route::resource('subjects',SubjectsController::class)->only([
         'index','create','store','edit','update','destroy'
     ]);
 
-    Route::resource('educators',EducatorsController::class)->only([
-        'index','create','store','edit','update','destroy'
+        //SCHEDULES
+
+    Route::resource('schedules', SchedulesController::class)->only([
+        'create','store','edit','update','destroy'
+    ]);
+
+        //LESSON_HOURS
+
+    Route::resource('lesson_hours', LessonHoursController::class)->only([
+        'index','edit','update'
+    ]);
+
+        //MESSAGES
+
+    Route::get('messages/show_user_message/{id}', [MessagesController::class, 'show_user_message'])->name('messages.show_user_message');
+
+        //OTHER
+
+
+    Route::resource('parents_has_students', ParentsHasStudentsController::class)->only([
+        'destroy'
     ]);
 
     Route::resource('classeshassubjects', ClassesHasSubjectsController::class)->only([
         'index','create','store','edit','update','destroy'
     ]);
 
-    Route::get('messages/show_user_message/{id}', [MessagesController::class, 'show_user_message'])->name('messages.show_user_message');
+    Route::resource('teachers_has_subjects', TeachersHasSubjectController::class)->only([
+        'index','create','store','edit','update','destroy'
+    ]);
 
-
-
-});
-
-Route::group([
-    'middleware' => 'roles',
-    'roles' => ['Administrator','Sekretariat']
-], function() {
 
 
 
@@ -131,9 +172,13 @@ Route::group([
     'roles' => ['Administrator','Nauczyciel']
 ], function() {
 
+        //TEACHERS
+
     Route::resource('teachers', TeachersController::class)->only([
         'edit','update','show'
     ]);
+
+        //MARKS
 
     Route::resource('marks', MarksController::class)->only([
         'index','create','store','edit','update','destroy'
@@ -141,11 +186,12 @@ Route::group([
 
     Route::post('marks/delete_mark', [MarksController::class, 'delete_mark'])->name('marks.delete_mark');
 
-//    Route::get('classes/subjects/{class}', [ClassesController::class, 'subjects'])->name('classes.subjects');
     Route::get('marks/show_class/{id}' , [MarksController::class, 'show_class'])->name('marks.show_class');
 
     Route::post('marks/multiple_store' , [MarksController::class, 'multiple_store'])->name('marks.multiple_store');
 });
+
+        //SCHEDULES
 
     Route::get('schedule/show_teacher/{id}', [SchedulesController::class, 'show_teacher'])->name('schedules.show_teacher');
 
@@ -166,19 +212,17 @@ Route::group([
     'roles' => ['Administrator','Uczen','Nauczyciel','Wychowawca','Sekretariat','Rodzic']
 ], function() {
 
-    Route::resource('schedules', SchedulesController::class)->only([
-        'index', 'show'
-    ]);
+        //MARKS
 
     Route::resource('marks', MarksController::class)->only([
         'show'
     ]);
 
-    Route::resource('messages', MessagesController::class)->only([
-       'index','create','show','update','destroy','store'
-    ]);
+        //MESSAGES
 
-//    Route::get('messages/mass_message', [MessagesController::class, 'asd'])->name('messages.mass_message');
+    Route::resource('messages', MessagesController::class)->only([
+        'index','create','show','update','destroy','store'
+    ]);
 
     Route::get('message/create_mass_message', [MessagesController::class, 'create_mass_message'])->name('messages.create_mass_message');
 
@@ -188,8 +232,16 @@ Route::group([
 
     Route::get('messages/messages_sent/{id}',[MessagesController::class, 'messages_sent'])->name('messages.messages_sent');
 
+        //SCHEDULES
+
+    Route::resource('schedules', SchedulesController::class)->only([
+        'index', 'show'
+    ]);
+
+        //NOTES
+
     Route::resource('notes', NotesController::class)->only([
-        'index','create','show','update','destroy','store'
+        'index','show'
     ]);
 
 });
@@ -213,12 +265,18 @@ Route::group([
     'roles' => ['Administrator','Nauczyciel','Wychowawca','Sekretariat']
 ], function() {
 
-//    Route::resource('notes', NotesController::class)->only([
-//        'index','create','show','update','destroy','store'
-//    ]);
-//    Route::get('search_student', [NotesController::class, 'search_student']);
-
     Route::get('search_students', [NotesController::class, 'search']);
+});
+
+Route::group([
+    'middleware' => 'roles',
+    'roles' => ['Administrator','Nauczyciel','Wychowawca','Sekretariat']
+], function() {
+
+    Route::resource('notes', NotesController::class)->only([
+        'create','destroy','store'
+    ]);
+
 });
 
 

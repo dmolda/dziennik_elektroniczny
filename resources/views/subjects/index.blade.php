@@ -38,7 +38,7 @@
                 </td>
                 <td>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['subjects.destroy', $subject->id]]) !!}
-                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-danger" onclick="return confirm('Potwierdź usunięcie przedmiotu!')"><i class="fas fa-trash"></i></button>
                     {!! Form::close() !!}
                 </td>
             </tr>

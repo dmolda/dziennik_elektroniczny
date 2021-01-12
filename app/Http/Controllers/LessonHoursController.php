@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TeachersHasSubject;
+use App\Models\LessonHours;
 use Illuminate\Http\Request;
+use DB;
 
-class TeachersHasSubjectController extends Controller
+class LessonHoursController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class TeachersHasSubjectController extends Controller
      */
     public function index()
     {
-        //
+        $lesson_hours = LessonHours::orderBy('time','ASC')->get();
+        return view('lesson_hours.index',compact('lesson_hours'));
     }
 
     /**
@@ -57,7 +59,8 @@ class TeachersHasSubjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $lesson_hours = LessonHours::orderBy('time','ASC')->get();
+        return view('lesson_hours.edit',['lesson_hours'=>$lesson_hours],['id'=>$id]);
     }
 
     /**
@@ -69,7 +72,23 @@ class TeachersHasSubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        for($i=1;$i<=12;$i++){
+            $start_time = "start_time|" . $i;
+            $end_time = "end_time|" . $i;
+            DB::table('lesson_hours')
+                ->where('time', $i)
+                ->update([
+                   'start_time' => $request->get($start_time),
+                   'end_time' => $request->get($end_time),
+                    'updated_at' => now()
+                ]);
+
+        }
+
+        $lesson_hours = LessonHours::orderBy('time','ASC')->get();
+        return view('lesson_hours.index',compact('lesson_hours'));
+
     }
 
     /**
@@ -80,8 +99,6 @@ class TeachersHasSubjectController extends Controller
      */
     public function destroy($id)
     {
-        $subject = TeachersHasSubject::find($id);
-        $subject->delete();
-        return redirect()->back();
+        //
     }
 }
