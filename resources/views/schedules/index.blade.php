@@ -9,7 +9,9 @@
 @section('content')
     <div class="card-header">
         <p style="text-align: left">
+            @if(Auth()->user()->hasAnyRole(['Administrator']) OR Auth()->user()->hasAnyRole(['Sekretariat']))
             <a class="btn btn-info" href="{{route('lesson_hours.index')}}">Godziny lekcyjne</a>
+            @endif
             <span style="float: right">
             <a class="btn btn-info" href="{{route('dashboard')}}">Powrót</a>
         </span>

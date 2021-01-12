@@ -21,7 +21,7 @@
         </style>
     </head>
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+        <div class="relative flex items-top justify-center min-h-screen bg-gray-100  sm:items-center sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -41,7 +41,7 @@
                     <i class="fas fa-graduation-cap fa-7x">eDziennik</i>
                 </div>
 
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+                <div class="mt-8 bg-white  overflow-hidden shadow sm:rounded-lg">
                     <div class="grid grid-cols-1 md:grid-cols-2">
                         <div class="p-6">
                             <div class="flex items-center">
@@ -51,7 +51,8 @@
 
 
                             <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                <div class="mt-2 text-gray-600  text-sm">
+                                    <br>
                                     Dziennik został stworzony tak, aby był jak najprostszy w obsłudze.
                                 </div>
                             </div>
@@ -63,7 +64,8 @@
                             </div>
 
                             <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                <div class="mt-2 text-gray-600 text-sm">
+                                    <br>
                                    Do dziennika posiadają dostęp tylko upoważnione osoby.
                                 </div>
                             </div>
@@ -75,7 +77,8 @@
                             </div>
 
                             <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                <div class="mt-2 text-gray-600 text-sm">
+                                    <br>
                                     Ciągłe prace sprawiają, że dziennik jest uaktualniany poprzez nowe funkcje.
                                 </div>
                             </div>
@@ -87,7 +90,8 @@
                             </div>
 
                             <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                <div class="mt-2 text-gray-600 text-sm">
+                                    <br>
                                     Zarządzanie dziennikiem jest proste i intuicyjne. Do tego zadania nie potrzeba pomocy informatyka.
                                 </div>
                             </div>

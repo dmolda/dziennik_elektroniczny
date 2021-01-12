@@ -8,10 +8,18 @@
 
     <div class="card-header">
         <p style="text-align: left">
+            @if(Auth()->user()->hasAnyRole(['Administrator']))
+                <a class="btn btn-info" href="{{route('parents.edit', $parent->id)}}">Edytuj</a>
+            @endif
+
+            @if(isset($parent->name))
+
+                @else
             <a class="btn btn-info" href="{{route('parents.edit', $parent->id)}}">Edytuj</a>
+            @endif
             <span style="float: right">
             <a class="btn btn-info" href="{{route('parents.index')}}">Powrót</a>
-        </span>
+        </span><br><br>
         </p>
     </div>
 

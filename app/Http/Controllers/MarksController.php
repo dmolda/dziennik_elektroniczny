@@ -148,6 +148,7 @@ class MarksController extends Controller
                     $mark = 6;
                 }
 
+
                 $student_id = $request->get("student".$i);
                 DB::table("marks")->insert([
                     'mark_desc' => $request->get($i),

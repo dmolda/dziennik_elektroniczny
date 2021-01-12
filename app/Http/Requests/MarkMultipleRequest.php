@@ -24,7 +24,7 @@ class MarkMultipleRequest extends FormRequest
     public function rules()
     {
         return [
-            'mark_desc' => 'in:1,1+,2-,2,2+,3-,3,3+,4-,4,4+,5-,5,5+,6-,6',
+            'mark_desc' => 'in:1,+1,-2,2,+2,-3,3,+3,-4,4,+4,-5,5,+5,-6,6',
             'description' => 'required|min:2|max:255',
             'weight' => 'required'
         ];
@@ -33,7 +33,7 @@ class MarkMultipleRequest extends FormRequest
     public function messages()
     {
         return [
-            'mark_desc.in' => 'Wygląd ocen: 1, 1+, 2-, 2, +2, 3-, 3, 3+, 4-, 4, 4+, 5-, 5, 5+, 6-, 6',
+            'mark_desc.in' => 'Wygląd ocen: 1, +1, -2, 2, +2, -3, 3, +3, -4, 4, +4, -5,5, +5, -6, 6',
             'description.required' => 'Pole opis jest wymagane',
             'description.min' => 'Opis musi być dłuższy niz 2 znaków',
             'weight.required' => 'Pole waga jest wymagane',

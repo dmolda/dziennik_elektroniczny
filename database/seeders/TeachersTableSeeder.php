@@ -16,14 +16,16 @@ class TeachersTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create('pl_PL');
 
-        for($i=0;$i<100;$i++){
+        for($i=0;$i<15;$i++){
             $teacher = new Teachers();
             $teacher->name = $faker->firstName;
-            $teacher->second_name = $faker->firstName;
+            if(rand('0',1) == 1){
+                $teacher->second_name = $faker->firstName;
+            }
             $teacher->last_name = $faker->lastName;
             $teacher->date_of_birth = $faker->date();
             $teacher->sex = $faker->randomElement(['kobieta', 'mężczyzna']);
-            $teacher->users_id = $i+103;
+            $teacher->users_id = $i+30;
             $teacher->save();
 
         }

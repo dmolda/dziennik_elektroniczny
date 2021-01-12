@@ -10,10 +10,18 @@
 
     <div class="card-header">
         <p style="text-align: left">
-            <a class="btn btn-info" href="{{route('students.edit', $student->id)}}">Edytuj</a>
+            @if(Auth()->user()->hasAnyRole(['Administrator']))
+                <a class="btn btn-info" href="{{route('students.edit', $student->id)}}">Edytuj</a>
+            @endif
+
+            @if(isset($student->name))
+
+            @else
+                <a class="btn btn-info" href="{{route('students.edit', $student->id)}}">Edytuj</a>
+            @endif
             <span style="float: right">
             <a class="btn btn-info" href="{{route('students.index')}}">Powrót</a>
-        </span>
+        </span><br><br>
         </p>
     </div>
 

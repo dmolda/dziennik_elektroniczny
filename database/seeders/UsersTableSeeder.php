@@ -45,7 +45,7 @@ class UsersTableSeeder extends Seeder
         $user->save();
         $user->roles()->attach(Roles::where('name','rodzic')->first()->id);
 
-        for($i=0;$i<100;$i++){
+        for($i=0;$i<25;$i++){
             $user = new User();
             $user->name = $faker->userName;
             $user->email = $faker->email;
@@ -55,7 +55,7 @@ class UsersTableSeeder extends Seeder
 
         }
 
-        for($i=0;$i<100;$i++){
+        for($i=0;$i<15;$i++){
             $user = new User();
             $user->name = $faker->userName;
             $user->email = $faker->email;
@@ -65,17 +65,8 @@ class UsersTableSeeder extends Seeder
 
         }
 
+
         for($i=0;$i<10;$i++){
-            $user = new User();
-            $user->name = $faker->userName;
-            $user->email = $faker->email;
-            $user->password = bcrypt('qwerty12');
-            $user->save();
-            $user->roles()->attach(Roles::where('name','rodzic')->first()->id);
-
-        }
-
-        for($i=0;$i<100;$i++){
             $user = new User();
             $user->name = $faker->userName;
             $user->email = $faker->email;
